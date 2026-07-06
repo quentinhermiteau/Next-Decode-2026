@@ -1,6 +1,6 @@
-import { AuthProvider } from "@/contexts/authContext";
+import Header from "@/components/Header";
 import { routing } from "@/i18n/routing";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -22,8 +22,9 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <NextIntlClientProvider>
-      <AuthProvider>{children}</AuthProvider>
-    </NextIntlClientProvider>
+    <>
+      <Header />
+      {children}
+    </>
   );
 }
