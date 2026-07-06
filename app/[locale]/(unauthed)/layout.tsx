@@ -1,3 +1,4 @@
+import { isAuthenticated } from "@/actions/cookies";
 import Header from "@/components/Header";
 import { routing } from "@/i18n/routing";
 import { hasLocale } from "next-intl";
@@ -20,10 +21,11 @@ export default async function LocaleLayout({ children, params }: Props) {
   }
 
   setRequestLocale(locale);
+  const authenticated = await isAuthenticated();
 
   return (
     <>
-      <Header />
+      <Header authed={authenticated} />
       {children}
     </>
   );

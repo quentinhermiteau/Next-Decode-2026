@@ -1,20 +1,16 @@
-"use client";
-
+import { isAuthenticated } from "@/actions/cookies";
 import HeaderAdmin from "@/components/HeaderAdmin";
-import { AuthContext } from "@/contexts/authContext";
-import { useRouter } from "@/i18n/navigation";
-import { useContext } from "react";
+import { redirect } from "next/navigation";
 
-export default function AuthedLayout({
+export default async function AuthedLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { authed } = useContext(AuthContext);
-  const router = useRouter();
+  const authenticated = await isAuthenticated();
 
-  if (!authed) {
-    router.push("/");
+  if (!authenticated) {
+    redirect("/");
   }
 
   return (

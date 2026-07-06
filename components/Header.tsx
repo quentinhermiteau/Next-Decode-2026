@@ -1,13 +1,25 @@
 "use client";
 
-import { AuthContext } from "@/contexts/authContext";
+import { login, logout } from "@/actions/cookies";
 import { useRouter } from "@/i18n/navigation";
-import { useContext } from "react";
 import Button from "./Button";
 
-export default function Header() {
-  const { authed, login, logout } = useContext(AuthContext);
+type HeaderProps = {
+  authed: boolean;
+};
+
+export default function Header({ authed }: HeaderProps) {
   const router = useRouter();
+
+  const handleLogin = async () => {
+    await login();
+    router.refresh();
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    router.refresh();
+  };
 
   return (
     <div className="flex shadow-2xl bg-gray-200 text-2xl p-4 m-4 rounded-2xl">
@@ -16,13 +28,13 @@ export default function Header() {
         {authed ? (
           <div>
             <Button onClick={() => router.push("/dashboard")}>Dashboard</Button>
-            <Button variant="destructive" onClick={logout}>
+            <Button variant="destructive" onClick={handleLogout}>
               Logout
             </Button>
           </div>
         ) : (
           <div>
-            <Button onClick={login}>Login</Button>
+            <Button onClick={handleLogin}>Login</Button>
           </div>
         )}
       </div>

@@ -15,16 +15,7 @@ export const AuthContext = createContext<AuthContextType>({
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authed, setAuthed] = useState<boolean>(false);
 
-  const login = () => {
-    setAuthed(true);
-  };
-  const logout = () => {
-    setAuthed(false);
-  };
-
   return (
-    <AuthContext.Provider value={{ authed, login, logout }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ authed }}>{children}</AuthContext.Provider>
   );
 }
